@@ -4,6 +4,7 @@ from passlib.context import CryptContext
 from pydantic import Field, ValidationError
 
 from .domain_model import DomainModel
+from .role_model import Role
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -84,6 +85,9 @@ class UserDomain(DomainModel):
     name: str = Field(description="Имя пользователя", examples=["Ваня"])
     username: str = Field(
         description="Username, нужен для авторизации пользователя", examples=["johndoe"]
+    )
+    role: Role = Field(
+        description="Роль, которой принадлежит пользователю", examples=[Role.ADMIN]
     )
     password: str = Field(exclude=True)
     created_at: datetime = Field(
