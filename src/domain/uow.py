@@ -17,7 +17,7 @@ class AbstractUnitOfWork(ABC):
     session_repo: AbstractSessionRepository
     role_repo: AbstractRoleRepository
     refresh_token_repo: AbstractRefreshTokenRepository
-    buisness_element: AbstractBusinessElementRepository
+    buisness_element_repo: AbstractBusinessElementRepository
     access_role_rules_repo: AbstractAccessRoleRuleRepository
 
     @abstractmethod

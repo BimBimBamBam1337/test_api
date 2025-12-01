@@ -6,6 +6,16 @@ from infrastructure.utils.profiler import ProfileABCMeta
 
 class AbstractRefreshTokenRepository(ABC, metaclass=ProfileABCMeta):
     @abstractmethod
+    async def exists(self, id: int) -> bool:
+        """
+        Проверяет, существует ли refresh-токен по ID.
+
+        :param id: ID пользователя.
+        :return: True, если пользователь существует, иначе False.
+        """
+        raise NotImplementedError
+
+    @abstractmethod
     async def create(
         self,
         *,

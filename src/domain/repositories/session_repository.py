@@ -5,11 +5,22 @@ from infrastructure.utils.profiler import ProfileABCMeta
 
 
 class AbstractSessionRepository(ABC, metaclass=ProfileABCMeta):
+
+    @abstractmethod
+    async def exists(self, id: int) -> bool:
+        """
+        Проверяет, существует ли сессия по ID.
+
+        :param id: ID пользователя.
+        :return: True, если пользователь существует, иначе False.
+        """
+        raise NotImplementedError
+
     @abstractmethod
     async def create(
         self,
         *,
-        id: str,
+        id: int,
         user_id: int,
         session_token: str,
         expires_at,
@@ -30,7 +41,7 @@ class AbstractSessionRepository(ABC, metaclass=ProfileABCMeta):
         raise NotImplementedError
 
     @abstractmethod
-    async def get_by_id(self, id: str) -> SessionDomain | None:
+    async def get_by_id(self, id: int) -> SessionDomain | None:
         """
         Возвращает сессию по ID, если найдена.
 

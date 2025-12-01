@@ -6,6 +6,16 @@ from infrastructure.utils.profiler import ProfileABCMeta
 
 class AbstractRoleRepository(ABC, metaclass=ProfileABCMeta):
     @abstractmethod
+    async def exists(self, id: int) -> bool:
+        """
+        Проверяет, существует ли роль по ID.
+
+        :param id: ID пользователя.
+        :return: True, если пользователь существует, иначе False.
+        """
+        raise NotImplementedError
+
+    @abstractmethod
     async def create(
         self, *, id: int, name: str, description: str | None = None
     ) -> RoleDomain:
@@ -54,7 +64,7 @@ class AbstractRoleRepository(ABC, metaclass=ProfileABCMeta):
         raise NotImplementedError
 
     @abstractmethod
-    async def delete(self, id: int) -> bool:
+    async def delete(self, id: int) -> RoleDomain:
         """
         Удаляет роль по ID.
 

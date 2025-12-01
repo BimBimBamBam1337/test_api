@@ -6,6 +6,16 @@ from infrastructure.utils.profiler import ProfileABCMeta
 
 class AbstractBusinessElementRepository(ABC, metaclass=ProfileABCMeta):
     @abstractmethod
+    async def exists(self, id: int) -> bool:
+        """
+        Проверяет, существует ли элемент бизнеса по ID.
+
+        :param id: ID пользователя.
+        :return: True, если пользователь существует, иначе False.
+        """
+        raise NotImplementedError
+
+    @abstractmethod
     async def create(
         self, *, id: int, code: str, name: str, commit: str | None = None
     ) -> BuisnessElementDomain:
@@ -31,11 +41,11 @@ class AbstractBusinessElementRepository(ABC, metaclass=ProfileABCMeta):
         raise NotImplementedError
 
     @abstractmethod
-    async def get_by_code(self, code: str) -> BuisnessElementDomain | None:
+    async def get_by_name(self, code: str) -> BuisnessElementDomain | None:
         """
         Возвращает бизнес-элемент по его коду.
 
-        :param code: Машинное имя элемента.
+        :param name: Машинное имя элемента.
         :return: Доменная модель или None.
         """
         raise NotImplementedError
@@ -61,12 +71,12 @@ class AbstractBusinessElementRepository(ABC, metaclass=ProfileABCMeta):
         raise NotImplementedError
 
     @abstractmethod
-    async def delete(self, id: int) -> bool:
+    async def delete(self, id: int) -> BuisnessElementDomain:
         """
         Удаляет бизнес-элемент по ID.
 
         :param id: ID элемента.
-        :return: True, если удаление прошло успешно, иначе False.
+        :return: Возвращает домен бизнес елементов.
         """
         raise NotImplementedError
 
