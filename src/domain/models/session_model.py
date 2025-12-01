@@ -7,8 +7,8 @@ from .domain_model import DomainModel
 
 
 class SessionDomain(DomainModel):
-    id: UUID = Field(description="Уникальный идентификатор сессии")
-    user_id: int = Field(description="ID пользователя")
+    id: UUID = Field(description="Уникальный идентификатор сессии", examples=[1])
+    user_id: int = Field(description="ID пользователя", examples=[2])
     session_token: str = Field(description="Токен сессии (secure random)")
     expires_at: datetime = Field(description="Время окончания сессии")
 

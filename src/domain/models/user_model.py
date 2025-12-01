@@ -78,6 +78,7 @@ class UserSettings:
             raise ValidationError("Name is too short")
         if len(name) > UserSettings.NAME_MAX_LENGTH:
             raise ValidationError("Name is too long")
+        return
 
 
 class UserDomain(DomainModel):
@@ -89,6 +90,7 @@ class UserDomain(DomainModel):
     role: Role = Field(
         description="Роль, которой принадлежит пользователю", examples=[Role.ADMIN]
     )
+    is_active: bool = Field(description="Мягкое удаление", examples=[False])
     password: str = Field(exclude=True)
     created_at: datetime = Field(
         description="Время создания пользователя", examples=["2022-01-01T00:00:00"]

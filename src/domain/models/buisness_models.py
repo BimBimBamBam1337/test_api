@@ -20,7 +20,7 @@ class BuisnessElementsNames(str, Enum):
     STORES = "Магазин"
 
 
-class BuisnessDomain(DomainModel):
+class BuisnessElementDomain(DomainModel):
     id: int = Field(description="Уникальный индефикатор правила", examples=[1])
     buisness_elements: BuisnessElements = Field(
         description="Список бизнес элементов", examples=[BuisnessElements.ORDERS]
