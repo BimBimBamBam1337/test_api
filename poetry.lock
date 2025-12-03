@@ -667,6 +667,18 @@ files = [
 ]
 
 [[package]]
+name = "skuf"
+version = "0.3.0"
+description = "Minimal Dependency Injection & Configuration Framework for Python"
+optional = false
+python-versions = ">=3.9"
+groups = ["main"]
+files = [
+    {file = "skuf-0.3.0-py3-none-any.whl", hash = "sha256:a8941eb48682d0be012a6e81b74c7e084b0446bdd5370dc10d476d7a553a7ebe"},
+    {file = "skuf-0.3.0.tar.gz", hash = "sha256:0ca669b6b8824ff1f6ec35f9d245d5bd25076d69c3624f0c15dfa6e9e08447b4"},
+]
+
+[[package]]
 name = "sqlalchemy"
 version = "2.0.44"
 description = "Database Abstraction Library"
@@ -827,4 +839,4 @@ dev = ["black (>=19.3b0) ; python_version >= \"3.6\"", "pytest (>=4.6.2)"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<4.0"
-content-hash = "56729c1ac22751105ed7388b68f5fac8b488a7ce044d34249b73dc2344087f05"
+content-hash = "1b5f6aa5fd297a96558367d90ad479433669645cad2d373fce3b6f75e5e89df2"
