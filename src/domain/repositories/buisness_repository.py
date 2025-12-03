@@ -71,7 +71,7 @@ class AbstractBusinessElementRepository(ABC, metaclass=ProfileABCMeta):
         raise NotImplementedError
 
     @abstractmethod
-    async def delete(self, id: int) -> BuisnessElementDomain:
+    async def delete(self, id: int) -> BuisnessElementDomain | None:
         """
         Удаляет бизнес-элемент по ID.
 

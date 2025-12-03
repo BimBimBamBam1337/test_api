@@ -92,7 +92,7 @@ class AbstractAccessRoleRuleRepository(ABC, metaclass=ProfileABCMeta):
         raise NotImplementedError
 
     @abstractmethod
-    async def delete(self, id: int) -> bool:
+    async def delete(self, id: int) -> AccessRoleRuleDomain | None:
         """
         Удаляет правило доступа по ID.
 

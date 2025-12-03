@@ -64,7 +64,7 @@ class AbstractRoleRepository(ABC, metaclass=ProfileABCMeta):
         raise NotImplementedError
 
     @abstractmethod
-    async def delete(self, id: int) -> RoleDomain:
+    async def delete(self, id: int) -> RoleDomain | None:
         """
         Удаляет роль по ID.
 

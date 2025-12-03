@@ -71,7 +71,7 @@ class AbstractSessionRepository(ABC, metaclass=ProfileABCMeta):
         raise NotImplementedError
 
     @abstractmethod
-    async def update_last_seen(self, id: str):
+    async def update_last_seen(self, id: int):
         """
         Обновляет поле последней активности.
 
@@ -80,7 +80,7 @@ class AbstractSessionRepository(ABC, metaclass=ProfileABCMeta):
         raise NotImplementedError
 
     @abstractmethod
-    async def delete(self, id: str) -> bool:
+    async def delete(self, id: int) -> SessionDomain | None:
         """
         Удаляет сессию по ID.
 

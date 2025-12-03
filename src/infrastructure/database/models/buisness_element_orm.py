@@ -5,7 +5,7 @@ from domain.models import BuisnessElementDomain, BuisnessElements
 from .base import BaseORM
 
 
-class BusinessElementORM(BaseORM):
+class BuisnessElementORM(BaseORM):
     __tablename__ = "business_elements"
 
     id: Mapped[int] = mapped_column(BIGINT, primary_key=True, autoincrement=True)

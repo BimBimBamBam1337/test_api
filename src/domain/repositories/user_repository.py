@@ -24,7 +24,7 @@ class AbstractUserRepository(ABC, metaclass=ProfileABCMeta):
         password: str,
         role: Role,
         name: str,
-    ):
+    ) -> UserDomain:
         """
         Создает нового пользователя и возвращает доменную модель пользователя.
 
@@ -77,6 +77,7 @@ class AbstractUserRepository(ABC, metaclass=ProfileABCMeta):
         username: str | None = None,
         password: str | None = None,
         role: Role | None = None,
+        is_active: bool | None = None,
     ) -> UserDomain | None:
         """
         Обновляет данные пользователя. Возвращает обновлённую модель, если пользователь найден.

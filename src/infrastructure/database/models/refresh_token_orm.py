@@ -1,6 +1,7 @@
 from datetime import datetime
-from sqlalchemy import BIGINT, Boolean, DateTime, String, ForeignKey, func
+from sqlalchemy import BIGINT, BOOLEAN, DateTime, String, ForeignKey, func
 from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.sql import expression
 
 from domain.models import RefreshTokenDomain
 from .base import BaseORM
@@ -13,7 +14,7 @@ class RefreshTokenORM(BaseORM):
     user_id: Mapped[int] = mapped_column(BIGINT, ForeignKey("users.id"), nullable=False)
     token_hash: Mapped[str] = mapped_column(String(255), nullable=False, unique=True)
     revoked: Mapped[bool] = mapped_column(
-        Boolean, nullable=False, server_default="false"
+        BOOLEAN, nullable=False, server_default=expression.func(False)
     )
     expires_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
     created_at: Mapped[datetime] = mapped_column(
