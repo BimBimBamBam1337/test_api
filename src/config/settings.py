@@ -5,7 +5,7 @@ from datetime import timedelta
 
 class Settings(BaseSettings):
     secret_api: str
-    postgres_dsn: PostgresDsn
+    postgres_dsn: str
     db_user: str
     db_pass: str
     db_name: str
