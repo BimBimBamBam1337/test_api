@@ -3,10 +3,10 @@ include .env
 
 
 migrate:
-	docker compose run -it --rm app poetry run alembic revision --autogenerate && make migrateup
+	docker-compose run -it --rm api poetry run alembic revision --autogenerate && make migrateup
 
 migrateup:
-	docker compose run -it --rm app poetry run alembic upgrade head
+	docker-compose run -it --rm api poetry run alembic upgrade head
 
 up:
 	docker-compose up -d --build && make logs

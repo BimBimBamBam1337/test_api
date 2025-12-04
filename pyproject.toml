@@ -25,7 +25,7 @@ dependencies = [
 packages = [{include = "test_api", from = "src"}]
 
 [tool.alembic]
-script_location = "%(here)s/src/infrastructure/database/migration"
+script_location = "%(here)s/src/infrastructure/database/migrations"
 prepend_sys_path = [
     "."
 ]
