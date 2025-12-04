@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field, ValidationError, model_validator
-from domain.models import RoleDomain, Role
+from domain.models import RoleDomain
 
 
 class RoleResponse(BaseModel):
@@ -40,15 +40,17 @@ class ListRoleResponse(BaseModel):
 
 class CreateRoleRequest(BaseModel):
     id: int = Field(
+        ...,
         description="Уникальный идентификатор роли",
         examples=[1],
     )
     role: str = Field(
+        ...,
         description="Название роли",
         examples=["admin"],
     )
     comment: str | None = Field(
-        ...,
+        default=None,
         description="Описание роли",
         examples=["Администратор"],
     )

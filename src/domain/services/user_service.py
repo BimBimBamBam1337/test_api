@@ -104,8 +104,8 @@ class UserService:
 
     async def update_user(
         self,
-        user_id: int,
         *,
+        user_id: int,
         name: str | None = None,
         username: str | None = None,
         password: str | None = None,

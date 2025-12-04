@@ -7,7 +7,7 @@ from infrastructure.utils.profiler import ProfileABCMeta
 class AbstractSessionRepository(ABC, metaclass=ProfileABCMeta):
 
     @abstractmethod
-    async def exists(self, id: int) -> bool:
+    async def exists(self, id: str) -> bool:
         """
         Проверяет, существует ли сессия по ID.
 
@@ -20,7 +20,7 @@ class AbstractSessionRepository(ABC, metaclass=ProfileABCMeta):
     async def create(
         self,
         *,
-        id: int,
+        id: str,
         user_id: int,
         session_token: str,
         expires_at,
@@ -41,7 +41,7 @@ class AbstractSessionRepository(ABC, metaclass=ProfileABCMeta):
         raise NotImplementedError
 
     @abstractmethod
-    async def get_by_id(self, id: int) -> SessionDomain | None:
+    async def get_by_id(self, id: str) -> SessionDomain | None:
         """
         Возвращает сессию по ID, если найдена.
 
@@ -71,7 +71,7 @@ class AbstractSessionRepository(ABC, metaclass=ProfileABCMeta):
         raise NotImplementedError
 
     @abstractmethod
-    async def update_last_seen(self, id: int):
+    async def update_last_seen(self, id: str):
         """
         Обновляет поле последней активности.
 
@@ -80,7 +80,7 @@ class AbstractSessionRepository(ABC, metaclass=ProfileABCMeta):
         raise NotImplementedError
 
     @abstractmethod
-    async def delete(self, id: int) -> SessionDomain | None:
+    async def delete(self, id: str) -> SessionDomain | None:
         """
         Удаляет сессию по ID.
 

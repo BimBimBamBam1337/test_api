@@ -20,7 +20,7 @@ class AbstractAccessRoleRuleRepository(ABC, metaclass=ProfileABCMeta):
         self,
         *,
         id: int,
-        role_id: int,
+        role: str,
         element_id: int,
         read_permission: bool = False,
         read_all_permission: bool = False,
@@ -34,7 +34,7 @@ class AbstractAccessRoleRuleRepository(ABC, metaclass=ProfileABCMeta):
         Создаёт правило доступа для роли к бизнес-элементу.
 
         :param id: Уникальный идентификатор правила.
-        :param role_id: ID роли.
+        :param role: Наименование роли.
         :param element_id: ID бизнес-элемента.
         :param read_permission: Разрешение на чтение собственных объектов.
         :param read_all_permission: Разрешение на чтение всех объектов.
@@ -59,12 +59,12 @@ class AbstractAccessRoleRuleRepository(ABC, metaclass=ProfileABCMeta):
 
     @abstractmethod
     async def get_by_role_and_element(
-        self, role_id: int, element_id: int
+        self, role: str, element_id: int
     ) -> AccessRoleRuleDomain | None:
         """
         Возвращает правило доступа по роли и бизнес-элементу.
 
-        :param role_id: ID роли.
+        :param role: Наименование роли.
         :param element_id: ID бизнес-элемента.
         :return: Доменная модель или None.
         """

@@ -2,11 +2,11 @@ from domain.exceptions import (
     BuisnessElementAlreadyExistsError,
     BuisnessElementNotFoundError,
 )
-from domain.models import BuisnessElementDomain
+from domain.models import BuisnessElementDomain, BuisnessElements
 from domain.uow import AbstractUnitOfWork
 
 
-class BusinessElementService:
+class BuisnessElementService:
     def __init__(self, uow: AbstractUnitOfWork):
 
         self.__element_repo = uow.buisness_element_repo
@@ -35,7 +35,11 @@ class BusinessElementService:
         if existing is not None:
             raise BuisnessElementNotFoundError(name=name)
 
-        element = await self.__element_repo.create(id=id, code=code, name=name)
+        element = await self.__element_repo.create(
+            id=id,
+            code=code,
+            name=name,
+        )
         return element
 
     async def get_element_by_id(self, id: int) -> BuisnessElementDomain:
@@ -64,7 +68,9 @@ class BusinessElementService:
             raise BuisnessElementNotFoundError(name=name)
         return element
 
-    async def update_element(self, id: int, *, name: str) -> BuisnessElementDomain:
+    async def update_element(
+        self, *, id: int, name: str, code: str
+    ) -> BuisnessElementDomain:
         """
         Обновляет название объекта бизнес-приложения.
 
@@ -78,7 +84,7 @@ class BusinessElementService:
         if existing is not None and existing.id != id:
             raise BuisnessElementAlreadyExistsError(name=name)
 
-        updated = await self.__element_repo.update(id, name=name)
+        updated = await self.__element_repo.update(id, name=name, code=code)
         if updated is None:
             raise BuisnessElementNotFoundError(id=id)
         return updated

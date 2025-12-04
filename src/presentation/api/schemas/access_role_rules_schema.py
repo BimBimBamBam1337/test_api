@@ -58,6 +58,7 @@ class AccessRoleRuleResponse(BaseModel):
 
 
 class CreateAccessRoleRuleRequest(BaseModel):
+    id: int = Field(description="Уникальный идентификатор правила", examples=[1])
     role: Role = Field(
         description="Роль, которой принадлежит правило", examples=[Role.MANAGER]
     )

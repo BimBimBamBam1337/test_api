@@ -1,16 +1,7 @@
 from datetime import datetime
 from pydantic import BaseModel, Field, ValidationError, model_validator
-from uuid import UUID
 
 from domain.models.refresh_token_model import RefreshTokenDomain
-
-
-class RefreshTokenRequest(BaseModel):
-    refresh_token: str = Field(
-        ...,
-        description="Refresh токен, выданный ранее",
-        examples=["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."],
-    )
 
 
 class RefreshTokenResponse(BaseModel):
@@ -39,11 +30,38 @@ class RefreshTokenResponse(BaseModel):
         )
 
 
+class ListRefreshTokenResponse(BaseModel):
+    refresh_tokens: list[RefreshTokenResponse] = Field(
+        ..., description="Список токенов"
+    )
+    total: int = Field(..., description="Кол-во токенов")
+
+    @classmethod
+    def from_domain(
+        cls, refresh_tokens: list[RefreshTokenDomain]
+    ) -> "ListRefreshTokenResponse":
+        return cls(
+            refresh_tokens=[
+                RefreshTokenResponse.from_domain(refresh_token)
+                for refresh_token in refresh_tokens
+            ],
+            total=len(refresh_tokens),
+        )
+
+
+class RefreshTokenRequest(BaseModel):
+    refresh_token: str = Field(
+        ...,
+        description="Refresh токен, выданный ранее",
+        examples=["eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."],
+    )
+
+
 class CreateRefreshTokenResponse(BaseModel):
     id: int = Field(description="ID refresh-токена", examples=[1])
     user_id: int = Field(description="ID пользователя", examples=[5])
 
-    refresh_token: str = Field(
+    token_hash: str = Field(
         description="Сам refresh токен (отдаётся только один раз)",
         examples=["eyJhbGciOi..."],
     )

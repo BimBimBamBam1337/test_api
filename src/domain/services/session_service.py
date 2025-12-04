@@ -16,7 +16,7 @@ class SessionService:
     def __init__(self, uow: AbstractUnitOfWork):
         self.__session_repo = uow.session_repo
 
-    async def exists(self, id: int) -> bool:
+    async def exists(self, id: str) -> bool:
         """
         Проверяет, существует ли сессия с указанным ID.
 
@@ -28,7 +28,7 @@ class SessionService:
     async def create_session(
         self,
         *,
-        id: int,
+        id: str,
         user_id: int,
         session_token: str,
         expires_at: datetime | None = None,
@@ -59,7 +59,7 @@ class SessionService:
         )
         return session
 
-    async def get_session_by_id(self, id: int) -> SessionDomain:
+    async def get_session_by_id(self, id: str) -> SessionDomain:
         """
         Возвращает сессию по её уникальному ID.
 
@@ -102,7 +102,7 @@ class SessionService:
         """
         await self.__session_repo.update_last_seen(id)
 
-    async def delete_session(self, id: str) -> bool:
+    async def delete_session(self, id: str) -> SessionDomain:
         """
         Удаляет сессию по её ID.
 

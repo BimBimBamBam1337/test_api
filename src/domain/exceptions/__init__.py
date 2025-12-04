@@ -18,3 +18,8 @@ from .buisness_element_errors import (
     BuisnessElementAlreadyExistsError,
     BuisnessElementNotFoundError,
 )
+from .base_errors import (
+    NotPermissionError,
+    RecordNotFoundError,
+    RecordAlreadyExistsError,
+)

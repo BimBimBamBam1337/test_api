@@ -26,3 +26,8 @@ class RecordNotFoundError(BaseRecordError):
 
     def __init__(self, **fields: Any):
         super().__init__(self.__model__, fields, "not found.")
+
+
+class NotPermissionError(Exception):
+    def __init__(self, message: str = "Not permission."):
+        super().__init__(message)

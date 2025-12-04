@@ -29,18 +29,19 @@ class UserResponse(BaseModel):
         )
 
 
-class ListUserResponse(BaseModel):
+class ListUsersResponse(BaseModel):
     users: list[UserResponse] = Field(..., description="Список пользователей")
     total: int = Field(..., description="Кол-во пользователей")
 
     @classmethod
-    def from_domain(cls, users: list[UserDomain]) -> "ListUserResponse":
+    def from_domain(cls, users: list[UserDomain]) -> "ListUsersResponse":
         return cls(
             users=[UserResponse.from_domain(user) for user in users], total=len(users)
         )
 
 
 class CreateUserRequest(BaseModel):
+    id: int = Field(description="Уникальный индефикатор пользователя", examples=[1])
     name: str = Field(
         ...,
         min_length=UserSettings.NAME_MIN_LENGTH,
@@ -86,10 +87,16 @@ class UpdateUserRequest(BaseModel):
         max_length=UserSettings.PASSWORD_MAX_LENGTH,
         description="Пароль пользователя",
     )
+    role: str | None = Field(default=Role.USER.value, description="Роль пользователя")
 
     @model_validator(mode="after")
     def validate_params(self, values):
-        if self.name is None and self.username is None and self.password is None:
+        if (
+            self.name is None
+            and self.username is None
+            and self.password is None
+            and self.role is None
+        ):
             raise ValidationError(
                 "At least one of name, username, or password must be provided"
             )

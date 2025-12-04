@@ -23,7 +23,7 @@ class AccessRoleRuleService:
         self,
         *,
         id: int,
-        role_id: int,
+        role: str,
         element_id: int,
         read_permission: bool = False,
         read_all_permission: bool = False,
@@ -37,20 +37,18 @@ class AccessRoleRuleService:
         Создаёт новое правило доступа для роли к бизнес-элементу.
 
         :param id: Уникальный идентификатор правила.
-        :param role_id: ID роли.
+        :param role: Имя роли.
         :param element_id: ID бизнес-элемента.
         :return: Доменная модель правила доступа.
         :raise AccessRoleRuleAlreadyExistsError: Если правило для данной роли и элемента уже существует.
         """
-        existing = await self.__rule_repo.get_by_role_and_element(role_id, element_id)
+        existing = await self.__rule_repo.get_by_role_and_element(role, element_id)
         if existing is not None:
-            raise AccessRoleRuleAlreadyExistsError(
-                role_id=role_id, element_id=element_id
-            )
+            raise AccessRoleRuleAlreadyExistsError(role=role, element_id=element_id)
 
         rule = await self.__rule_repo.create(
             id=id,
-            role_id=role_id,
+            role=role,
             element_id=element_id,
             read_permission=read_permission,
             read_all_permission=read_all_permission,
@@ -76,7 +74,7 @@ class AccessRoleRuleService:
         return rule
 
     async def get_rule_by_role_and_element(
-        self, role_id: int, element_id: int
+        self, role: str, element_id: int
     ) -> AccessRoleRuleDomain:
         """
         Возвращает правило доступа по роли и бизнес-элементу.
@@ -86,9 +84,9 @@ class AccessRoleRuleService:
         :return: Доменная модель правила доступа.
         :raise AccessRoleRuleNotFoundError: Если правило не найдено.
         """
-        rule = await self.__rule_repo.get_by_role_and_element(role_id, element_id)
+        rule = await self.__rule_repo.get_by_role_and_element(role, element_id)
         if rule is None:
-            raise AccessRoleRuleNotFoundError(role_id=role_id, element_id=element_id)
+            raise AccessRoleRuleNotFoundError(role=role, element_id=element_id)
         return rule
 
     async def update_rule(
@@ -124,7 +122,7 @@ class AccessRoleRuleService:
             raise AccessRoleRuleNotFoundError(id=id)
         return updated
 
-    async def delete_rule(self, id: int) -> bool:
+    async def delete_rule(self, id: int) -> AccessRoleRuleDomain:
         """
         Удаляет правило доступа по ID.
 

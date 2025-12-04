@@ -23,7 +23,27 @@ class BuisnessElementResponse(BaseModel):
         )
 
 
+class ListBuisnessElementResponse(BaseModel):
+    buisness_elements: list[BuisnessElementResponse] = Field(
+        ..., description="Список бизнес элементов"
+    )
+    total: int = Field(..., description="Кол-во бизнес элементов")
+
+    @classmethod
+    def from_domain(
+        cls, buisness_elements: list[BuisnessElementDomain]
+    ) -> "ListBuisnessElementResponse":
+        return cls(
+            buisness_elements=[
+                BuisnessElementResponse.from_domain(buisness_element)
+                for buisness_element in buisness_elements
+            ],
+            total=len(buisness_elements),
+        )
+
+
 class CreateBuisnessElementRequest(BaseModel):
+    id: int = Field(description="Уникальный индефикатор бизнес элемента", examples=[1])
     buisness_elements: BuisnessElements = Field(
         ...,
         description="Тип бизнес-элемента",

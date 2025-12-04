@@ -16,7 +16,7 @@ class RoleService:
         """
         return await self.__role_repo.exists(id)
 
-    async def create_role(self, *, id: int, name: str) -> RoleDomain:
+    async def create_role(self, id: int, role_name: str) -> RoleDomain:
         """
         Создаёт новую роль.
 
@@ -25,11 +25,11 @@ class RoleService:
         :return: Доменная модель роли.
         :raise RoleAlreadyExistsError: Если роль с таким названием уже существует.
         """
-        existing = await self.__role_repo.get_by_name(name)
+        existing = await self.__role_repo.get_by_name(role_name)
         if existing is not None:
-            raise RoleAlreadyExistsError(name=name)
+            raise RoleAlreadyExistsError(role=role_name)
 
-        role = await self.__role_repo.create(id=id, name=name)
+        role = await self.__role_repo.create(id=id, role=role_name)
         return role
 
     async def get_role_by_id(self, id: int) -> RoleDomain:
@@ -58,7 +58,7 @@ class RoleService:
             raise RoleNotFoundError(name=name)
         return role
 
-    async def update_role(self, id: int, *, name: str) -> RoleDomain:
+    async def update_role(self, id: int, role: str | None) -> RoleDomain:
         """
         Обновляет название роли.
 
@@ -68,11 +68,11 @@ class RoleService:
         :raise RoleAlreadyExistsError: Если новая роль с таким названием уже существует.
         :raise RoleNotFoundError: Если роль с указанным ID не найдена.
         """
-        existing = await self.__role_repo.get_by_name(name)
+        existing = await self.__role_repo.get_by_name(role)
         if existing is not None and existing.id != id:
-            raise RoleAlreadyExistsError(name=name)
+            raise RoleAlreadyExistsError(role=role)
 
-        updated = await self.__role_repo.update(id, name=name)
+        updated = await self.__role_repo.update(id, role=role)
         if updated is None:
             raise RoleNotFoundError(id=id)
         return updated
