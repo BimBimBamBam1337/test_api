@@ -1,18 +1,6 @@
 from fastapi import FastAPI
 
-from config import settings
-from presentation.api.routes.user_router import router as user_router
-from presentation.api.routes.role_router import router as role_router
-from presentation.api.routes.session_router import router as session_router
-from presentation.api.routes.refresh_token_router import (
-    router as refresh_token_router,
-)
-from presentation.api.routes.buisness_elements_router import (
-    router as buisness_element_router,
-)
-from presentation.api.routes.access_role_rules_router import (
-    router as access_role_rules_router,
-)
+from presentation.api.routes import routers
 
 # ------------------------------------------------------
 # Главный FastAPI app
@@ -27,19 +15,17 @@ app = FastAPI(
 )
 
 
-app.include_router(user_router, prefix="/api/v1/users", tags=["Users"])
-app.include_router(role_router, prefix="/api/v1/roles", tags=["Roles"])
-app.include_router(session_router, prefix="/api/v1/sessions", tags=["Sessions"])
+app.include_router(routers[0], prefix="/api/v1/users", tags=["Users"])
+app.include_router(routers[1], prefix="/api/v1/roles", tags=["Roles"])
+app.include_router(routers[2], prefix="/api/v1/sessions", tags=["Sessions"])
+app.include_router(routers[3], prefix="/api/v1/refresh-tokens", tags=["RefreshTokens"])
 app.include_router(
-    refresh_token_router, prefix="/api/v1/refresh-tokens", tags=["RefreshTokens"]
-)
-app.include_router(
-    buisness_element_router,
+    routers[4],
     prefix="/api/v1/buisness-elements",
     tags=["BuisnessElements"],
 )
 app.include_router(
-    access_role_rules_router,
+    routers[5],
     prefix="/api/v1/access-role-rules",
     tags=["AccessRoleRules"],
 )

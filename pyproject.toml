@@ -16,7 +16,9 @@ dependencies = [
     "loguru (>=0.7.3,<0.8.0)",
     "python-jose (==3.3.0)",
     "alembic (>=1.17.2,<2.0.0)",
-    "skuf (>=0.3.0,<0.4.0)"
+    "skuf (>=0.3.0,<0.4.0)",
+    "uvicorn (>=0.38.0,<0.39.0)",
+    "passlib (>=1.7.4,<2.0.0)"
 ]
 
 [tool.poetry]

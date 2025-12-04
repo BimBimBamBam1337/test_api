@@ -18,7 +18,7 @@ class UserORM(BaseORM):
     username: Mapped[str] = mapped_column(unique=True, nullable=False)
     password: Mapped[str] = mapped_column(nullable=False)
     is_active: Mapped[bool] = mapped_column(
-        BOOLEAN, nullable=False, server_default=expression.func(False)
+        BOOLEAN, nullable=False, server_default=expression.false()
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime, default=func.now(), nullable=False
