@@ -14,7 +14,7 @@ class RefreshTokenORM(BaseORM):
     user_id: Mapped[int] = mapped_column(BIGINT, ForeignKey("users.id"), nullable=False)
     token_hash: Mapped[str] = mapped_column(String(255), nullable=False, unique=True)
     revoked: Mapped[bool] = mapped_column(
-        BOOLEAN, nullable=False, server_default=expression.func(False)
+        BOOLEAN, nullable=False, server_default=expression.false()
     )
     expires_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
     created_at: Mapped[datetime] = mapped_column(

@@ -22,7 +22,7 @@ router = APIRouter(prefix="/sessions", tags=["Sessions"])
 )
 async def list_sessions_handler(
     user: UserDomain = Depends(get_user_from_verify_token),
-    handler: SessionHandler = Depends(get_sessions_handler),
+    handler: SessionHandler = Depends(get_session_handler),
 ):
     return await handler.list_user_sessions(user.id, requester=user)
 
@@ -35,7 +35,7 @@ async def list_sessions_handler(
 async def get_session_handler(
     session_id: str = Path(..., description="UUID сессии"),
     user: UserDomain = Depends(get_user_from_verify_token),
-    handler: SessionHandler = Depends(get_sessions_handler),
+    handler: SessionHandler = Depends(get_session_handler),
 ):
     return await handler.get_session(session_id=session_id, requester=user)
 
@@ -49,7 +49,7 @@ async def get_session_handler(
 async def delete_session_handler(
     session_id: str = Path(..., description="UUID сессии"),
     user: UserDomain = Depends(get_user_from_verify_token),
-    handler: SessionHandler = Depends(get_sessions_handler),
+    handler: SessionHandler = Depends(get_session_handler),
 ):
     return await handler.delete_session(session_id=session_id, requester=user)
 
@@ -62,6 +62,6 @@ async def delete_session_handler(
 )
 async def delete_all_sessions_handler(
     user: UserDomain = Depends(get_user_from_verify_token),
-    handler: SessionHandler = Depends(get_sessions_handler),
+    handler: SessionHandler = Depends(get_session_handler),
 ):
     return await handler.delete_user_sessions(user.id, requester=user)
