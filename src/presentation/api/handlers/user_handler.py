@@ -19,7 +19,7 @@ class UsersHandler:
         """Получение информации о текущем пользователе"""
         return UserResponse.from_domain(user)
 
-    async def list_users(self, initiator: UserDomain) -> ListUsersResponse:
+    async def get_users(self, initiator: UserDomain) -> ListUsersResponse:
         """Список пользователей (для ADMIN и MANAGER)"""
         if initiator.role not in [Role.ADMIN, Role.MANAGER]:
             raise NotPermissionError("Access denied")

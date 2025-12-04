@@ -95,3 +95,15 @@ class UserDomain(DomainModel):
     created_at: datetime = Field(
         description="Время создания пользователя", examples=["2022-01-01T00:00:00"]
     )
+
+    def verify_password(self, plain_password: str) -> bool:
+        """
+        Проверяет пароль пользователя.
+
+        Args:
+            plain_password: пароль пользователя
+
+        Returns:
+            bool
+        """
+        return pwd_context.verify(plain_password, self.password)

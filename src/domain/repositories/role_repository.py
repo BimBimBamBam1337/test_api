@@ -17,14 +17,14 @@ class AbstractRoleRepository(ABC, metaclass=ProfileABCMeta):
 
     @abstractmethod
     async def create(
-        self, *, id: int, role: str, description: str | None = None
+        self, *, id: int, role: str, comment: str | None = None
     ) -> RoleDomain:
         """
         Создаёт новую роль.
 
         :param id: Уникальный идентификатор роли.
         :param role: Название роли (например, 'admin', 'user').
-        :param description: Описание роли.
+        :param comment: Описание роли.
         :return: Доменная модель роли.
         """
         raise NotImplementedError
@@ -40,7 +40,7 @@ class AbstractRoleRepository(ABC, metaclass=ProfileABCMeta):
         raise NotImplementedError
 
     @abstractmethod
-    async def get_by_name(self, role: str | None) -> RoleDomain | None:
+    async def get_by_role_name(self, role_name: str) -> RoleDomain | None:
         """
         Возвращает роль по имени.
 
@@ -51,14 +51,14 @@ class AbstractRoleRepository(ABC, metaclass=ProfileABCMeta):
 
     @abstractmethod
     async def update(
-        self, id: int, *, role: str | None = None, description: str | None = None
+        self, id: int, role_name: str | None = None, comment: str | None = None
     ) -> RoleDomain | None:
         """
         Обновляет данные роли.
 
         :param id: ID роли.
         :param role: Новое название роли.
-        :param description: Новое описание роли.
+        :param comment: Новое описание роли.
         :return: Обновлённая доменная модель роли или None.
         """
         raise NotImplementedError

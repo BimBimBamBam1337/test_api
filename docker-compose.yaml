@@ -1,14 +1,17 @@
 services:
-  # сам бот
+  # сама api
   api:
     build: .
     restart: unless-stopped
     environment:
+      - DEV
       - DATABASE_DSN=postgresql+asyncpg://${DB_USER}:${DB_PASS}@postgres:5432/${DB_NAME}
+      - SECRET_KEY=${SECRET_KEY}
     depends_on:
       - postgres
     ports:
       - "8000:8000"
+    command: uv run uvicorn src.presentation.api.main:app --host 0.0.0.0 --port 8000 --log-level critical
     volumes:
       - .:/app
     networks:

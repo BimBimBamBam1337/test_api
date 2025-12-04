@@ -15,9 +15,9 @@ class RoleRepository(AbstractRoleRepository):
         return result.scalar() is not None
 
     async def create(
-        self, *, id: int, name: str, description: str | None = None
+        self, *, id: int, role: str, comment: str | None = None
     ) -> RoleDomain:
-        role = RoleORM(id=id, name=name, description=description)
+        role = RoleORM(id=id, role=role, comment=comment)
         self.session.add(role)
         await self.session.flush()
         return role.to_domain()
@@ -26,25 +26,22 @@ class RoleRepository(AbstractRoleRepository):
         role: RoleORM | None = await self.session.get(RoleORM, id)
         return role.to_domain() if role else None
 
-    async def get_by_name(self, name: str) -> RoleDomain | None:
+    async def get_by_role_name(self, role_name: str) -> RoleDomain | None:
         result = await self.session.execute(
-            select(RoleORM).where(RoleORM.name == name).limit(1)
+            select(RoleORM).where(RoleORM.role == role_name).limit(1)
         )
         role: RoleORM | None = result.scalar_one_or_none()
         return role.to_domain() if role else None
 
     async def update(
-        self,
-        id: int,
-        *,
-        name: str | None = None,
-        description: str | None = None,
+        self, id: int, role_name: str | None = None, comment: str | None = None
     ) -> RoleDomain | None:
+
         values = {}
-        if name is not None:
-            values["name"] = name
-        if description is not None:
-            values["description"] = description
+        if role_name is not None:
+            values["role"] = role_name
+        if comment is not None:
+            values["comment"] = comment
 
         result = await self.session.execute(
             update(RoleORM).where(RoleORM.id == id).values(**values).returning(RoleORM)

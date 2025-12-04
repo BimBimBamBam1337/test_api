@@ -19,7 +19,7 @@ class AccessRoleRuleRepository(AbstractAccessRoleRuleRepository):
         self,
         *,
         id: int,
-        role_id: int,
+        role: str,
         element_id: int,
         read_permission: bool = False,
         read_all_permission: bool = False,
@@ -31,7 +31,7 @@ class AccessRoleRuleRepository(AbstractAccessRoleRuleRepository):
     ) -> AccessRoleRuleDomain:
         rule_orm = AccessRoleRuleORM(
             id=id,
-            role_id=role_id,
+            role=role,
             element_id=element_id,
             read_permission=read_permission,
             read_all_permission=read_all_permission,
@@ -50,12 +50,12 @@ class AccessRoleRuleRepository(AbstractAccessRoleRuleRepository):
         return rule_orm.to_domain() if rule_orm else None
 
     async def get_by_role_and_element(
-        self, role_id: int, element_id: int
+        self, role: str, element_id: int
     ) -> AccessRoleRuleDomain | None:
         result = await self.session.execute(
             select(AccessRoleRuleORM)
             .where(
-                AccessRoleRuleORM.role_id == role_id,
+                AccessRoleRuleORM.role == role,
                 AccessRoleRuleORM.element_id == element_id,
             )
             .limit(1)

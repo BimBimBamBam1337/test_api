@@ -57,6 +57,23 @@ class AccessRoleRuleResponse(BaseModel):
         )
 
 
+class ListAccessRoleRuleResponse(BaseModel):
+    access_role_rules: list[AccessRoleRuleResponse] = Field(description="Список правил")
+    total: int = Field(description="Кол-во правил")
+
+    @classmethod
+    def from_domain(
+        cls, access_role_rules: list[AccessRoleRuleDomain]
+    ) -> "ListAccessRoleRuleResponse":
+        return cls(
+            access_role_rules=[
+                AccessRoleRuleResponse.from_domain(access_role_rule)
+                for access_role_rule in access_role_rules
+            ],
+            total=len(access_role_rules),
+        )
+
+
 class CreateAccessRoleRuleRequest(BaseModel):
     id: int = Field(description="Уникальный идентификатор правила", examples=[1])
     role: Role = Field(

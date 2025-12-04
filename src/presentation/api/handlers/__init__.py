@@ -4,3 +4,4 @@ from .refresh_token_hanler import RefreshTokenHandler
 from .role_handler import RoleHandler
 from .session_hanler import SessionHandler
 from .user_handler import UsersHandler
+from .auth_handler import AuthHandler
