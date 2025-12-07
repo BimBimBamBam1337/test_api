@@ -23,7 +23,7 @@ from .role_schema import (
     RoleResponse,
 )
 from .auth_schema import AuthLoginRequest, AuthLoginResponse, AuthRefreshResponse
-from .session_schema import SessionResponse, CreateSessionResponse
+from .session_schema import SessionResponse, CreateSessionRequest
 from .user_schema import (
     UserResponse,
     UpdateUserRequest,

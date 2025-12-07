@@ -56,9 +56,6 @@ async def revoke_refresh_token_handler(
     return await handler.revoke_token(token_id=token_id, initiator=user)
 
 
-# ----------------------------------------------------
-# DELETE /refresh-tokens — отзыв всех токенов пользователя
-# ----------------------------------------------------
 @router.delete(
     "",
     summary="Отзыв всех refresh-токенов текущего пользователя",

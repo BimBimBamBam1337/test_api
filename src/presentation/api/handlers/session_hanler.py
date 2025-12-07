@@ -4,7 +4,7 @@ from domain.models import UserDomain, SessionDomain
 from domain.services import SessionService
 from domain.uow import AbstractUnitOfWork
 from infrastructure.utils.logger_config import log
-from presentation.api.schemas import SessionResponse
+from presentation.api.schemas import SessionResponse, CreateSessionRequest
 
 
 class SessionHandler:
@@ -14,21 +14,17 @@ class SessionHandler:
     async def create_session(
         self,
         *,
-        id: str,
-        user: UserDomain,
-        session_token: str,
-        expires_at: datetime | None = None,
-        ip: str | None = None,
-        user_agent: str | None = None,
+        session_data: CreateSessionRequest,
+        initiator: UserDomain,
     ) -> SessionResponse:
         """Создание новой сессии для пользователя"""
         session = await self.session_service.create_session(
-            id=id,
-            user_id=user.id,
-            session_token=session_token,
-            expires_at=expires_at,
-            ip=ip,
-            user_agent=user_agent,
+            id=session_data.id,
+            user_id=initiator.id,
+            session_token=session_data.session_token,
+            expires_at=session_data.expires_at,
+            ip=session_data.ip,
+            user_agent=session_data.user_agent,
         )
         log.info("Created Session: {}", session)
         return SessionResponse.from_domain(session)
