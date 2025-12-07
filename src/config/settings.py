@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     refresh_token_expire: timedelta = timedelta(days=30)
     access_token_expire: timedelta = timedelta(days=7)
     secret_key: str
-
+    algorithm: str = "sha256"
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     @property

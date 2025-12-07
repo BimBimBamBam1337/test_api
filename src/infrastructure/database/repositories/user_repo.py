@@ -86,3 +86,15 @@ class UserRepository(AbstractUserRepository):
         result = await self.session.execute(query)
         users_orm = result.scalars().all()
         return [user_orm.to_domain() for user_orm in users_orm]
+
+    async def soft_delete(self, id: int) -> UserDomain | None:
+        await self.session.execute(
+            update(UserORM).values(is_active=False).where(UserORM.id == id)
+        )
+        await self.session.flush()
+
+    async def restore(self, id: int) -> UserDomain | None:
+        await self.session.execute(
+            update(UserORM).values(is_active=True).where(UserORM.id == id)
+        )
+        await self.session.flush()

@@ -15,9 +15,6 @@ from presentation.api.schemas import (
 router = APIRouter(prefix="/buisness-elements", tags=["Buisness Elements"])
 
 
-# ----------------------------------------------------
-# GET /buisness-elements — список всех элементов
-# ----------------------------------------------------
 @router.get(
     "",
     summary="Список всех бизнес-элементов",
@@ -30,9 +27,6 @@ async def list_buisness_elements_handler(
     return await handler.list_elements(user)
 
 
-# ----------------------------------------------------
-# POST /buisness-elements — создание нового элемента
-# ----------------------------------------------------
 @router.post(
     "",
     summary="Создание нового бизнес-элемента",
@@ -46,9 +40,6 @@ async def create_buisness_element_handler(
     return await handler.create_element(element_data=element_data, initiator=user)
 
 
-# ----------------------------------------------------
-# PATCH /buisness-elements/{element_id} — обновление элемента
-# ----------------------------------------------------
 @router.patch(
     "/{element_id}",
     summary="Обновление бизнес-элемента",

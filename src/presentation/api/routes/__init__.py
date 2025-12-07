@@ -10,6 +10,7 @@ from .buisness_elements_router import (
 from .access_role_rules_router import (
     router as access_role_rules_router,
 )
+from .auth_router import router as auth_router
 
 routers = [
     user_router,
@@ -18,4 +19,5 @@ routers = [
     refresh_token_router,
     buisness_element_router,
     access_role_rules_router,
+    auth_router
 ]

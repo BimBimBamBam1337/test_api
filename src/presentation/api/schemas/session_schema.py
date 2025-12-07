@@ -22,7 +22,7 @@ class SessionResponse(BaseModel):
         )
 
 
-class CreateSessionResponse(BaseModel):
+class CreateSessionRequest(BaseModel):
     id: UUID = Field(description="Уникальный идентификатор сессии", examples=[1])
     user_id: int = Field(description="ID пользователя", examples=[2])
     session_token: str = Field(description="Токен сессии (secure random)")

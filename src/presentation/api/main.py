@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from presentation.api.routes import routers
 
@@ -14,20 +15,37 @@ app = FastAPI(
     openapi_url="/openapi.json",
 )
 
-
-app.include_router(routers[0], prefix="/api/v1/users", tags=["Users"])
-app.include_router(routers[1], prefix="/api/v1/roles", tags=["Roles"])
-app.include_router(routers[2], prefix="/api/v1/sessions", tags=["Sessions"])
-app.include_router(routers[3], prefix="/api/v1/refresh-tokens", tags=["RefreshTokens"])
+app.include_router(routers[0], prefix="/api/v1", tags=["Users"])
+app.include_router(routers[1], prefix="/api/v1", tags=["Roles"])
+app.include_router(routers[2], prefix="/api/v1", tags=["Sessions"])
+app.include_router(routers[3], prefix="/api/v1", tags=["RefreshTokens"])
 app.include_router(
     routers[4],
-    prefix="/api/v1/buisness-elements",
+    prefix="/api/v1",
     tags=["BuisnessElements"],
 )
 app.include_router(
     routers[5],
-    prefix="/api/v1/access-role-rules",
+    prefix="/api/v1",
     tags=["AccessRoleRules"],
+)
+app.include_router(
+    routers[6],
+    prefix="/api/v1",
+    tags=["Auth"],
+)
+
+origins = [
+    "http://localhost",
+    "http://localhost:8000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # ------------------------------------------------------

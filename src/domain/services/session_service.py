@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from uuid import UUID
 
 from domain.exceptions import SessionNotFoundError
 from domain.models import SessionDomain
@@ -28,7 +29,7 @@ class SessionService:
     async def create_session(
         self,
         *,
-        id: str,
+        id: UUID,
         user_id: int,
         session_token: str,
         expires_at: datetime | None = None,
