@@ -5,7 +5,7 @@ from domain.entities import Employe
 
 class AbstractEmployeRepository(ABC):
     @abstractmethod
-    async def exitst(self, employe_id: int) -> bool:
+    async def exists(self, employe_id: int) -> bool:
         raise NotImplemented
 
     @abstractmethod

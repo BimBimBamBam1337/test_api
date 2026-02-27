@@ -5,7 +5,7 @@ from domain.entities import Departament
 
 class AbstractDepartamentRepository(ABC):
     @abstractmethod
-    async def exitst(self, departament_id: int) -> bool:
+    async def exists(self, departament_id: int) -> bool:
         raise NotImplemented
 
     @abstractmethod
@@ -26,7 +26,7 @@ class AbstractDepartamentRepository(ABC):
         raise NotImplemented
 
     @abstractmethod
-    async def update(self, Departament) -> Departament:
+    async def update(self, entity: Departament) -> Departament:
         raise NotImplemented
 
     @abstractmethod
