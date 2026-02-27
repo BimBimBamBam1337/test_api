@@ -1,2 +1,2 @@
-from .departament_repo import DepartamentRepository
-from .employe_repo import EmployeRepository
+from .departament_repo import AbstractDepartamentRepository
+from .employe_repo import AbstractEmployeRepository

@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from domain.entities import Employe
 
 
-class EmployeRepository(ABC):
+class AbstractEmployeRepository(ABC):
     @abstractmethod
     async def exitst(self, employe_id: int) -> bool:
         raise NotImplemented
