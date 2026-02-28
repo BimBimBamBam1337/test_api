@@ -1,2 +1,2 @@
-from .departament import Departament
-from .employe import Employe
+from .department import Department
+from .employee import Employee

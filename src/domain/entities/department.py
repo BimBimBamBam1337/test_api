@@ -3,7 +3,7 @@ from datetime import datetime
 
 
 @dataclass
-class Departament:
+class Department:
     id: int
     name: str
     parent_id: int | None
@@ -12,7 +12,7 @@ class Departament:
     @classmethod
     def create(
         cls, id: int, name: str, parent_id: int | None, created_at: datetime
-    ) -> "Departament":
+    ) -> "Department":
         return cls(
             id=id,
             name=name,

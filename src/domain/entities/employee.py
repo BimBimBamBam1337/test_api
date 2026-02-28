@@ -3,7 +3,7 @@ from datetime import datetime
 
 
 @dataclass
-class Employe:
+class Employee:
     id: int
     department_id: int
     full_name: str
@@ -20,7 +20,7 @@ class Employe:
         position: str,
         hired_at: datetime | None,
         created_at: datetime,
-    ) -> "Employe":
+    ) -> "Employee":
         return cls(
             id=id,
             department_id=department_id,

@@ -1,17 +1,16 @@
 from abc import ABC, abstractmethod
 
 from domain.repositories import (
-    AbstractDepartamentRepository,
-    AbstractEmployeRepository,
+    AbstractDepartmentRepository,
+    AbstractEmployeeRepository,
 )
 
 __all__ = ["AbstractUnitOfWork"]
 
 
 class AbstractUnitOfWork(ABC):
-    departament_repo: AbstractDepartamentRepository
-    employe_repo: AbstractEmployeRepository
-
+    department_repo: AbstractDepartmentRepository
+    employee_repo: AbstractEmployeeRepository
 
     @abstractmethod
     async def __aenter__(self) -> "AbstractUnitOfWork": ...
