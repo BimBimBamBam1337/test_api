@@ -10,9 +10,9 @@ class EmployeeRepository(AbstractEmployeeRepository):
     def __init__(self, session: AsyncSession):
         self.session = session
 
-    async def exists(self, employe_id: int) -> bool:
+    async def exists(self, employee_id: int) -> bool:
         result = await self.session.execute(
-            select(EmployeeORM.id).where(EmployeeORM.id == employe_id)
+            select(EmployeeORM.id).where(EmployeeORM.id == employee_id)
         )
         return result.scalar_one_or_none() is not None
 
@@ -21,9 +21,9 @@ class EmployeeRepository(AbstractEmployeeRepository):
 
         return entity
 
-    async def get_by_id(self, employe_id: int) -> Employee | None:
+    async def get_by_id(self, employee_id: int) -> Employee | None:
         result = await self.session.execute(
-            select(EmployeeORM).where(EmployeeORM.id == employe_id)
+            select(EmployeeORM).where(EmployeeORM.id == employee_id)
         )
         model = result.scalar_one_or_none()
         return model.to_entity() if model else None
@@ -43,9 +43,9 @@ class EmployeeRepository(AbstractEmployeeRepository):
         model = result.scalar_one_or_none()
         return model.to_entity() if model else None
 
-    async def delete(self, employe_id: int):
+    async def delete(self, employee_id: int):
         await self.session.execute(
             delete(EmployeeORM)
-            .where(EmployeeORM.id == employe_id)
+            .where(EmployeeORM.id == employee_id)
             .returning(EmployeeORM)
         )
