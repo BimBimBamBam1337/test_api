@@ -5,7 +5,7 @@ from domain.entities import Department
 
 class AbstractDepartmentRepository(ABC):
     @abstractmethod
-    async def exists(self, departament_id: int) -> bool:
+    async def exists(self, department_id: int) -> bool:
         raise NotImplemented
 
     @abstractmethod
@@ -13,13 +13,13 @@ class AbstractDepartmentRepository(ABC):
         raise NotImplemented
 
     @abstractmethod
-    async def get_by_id(self, departament_id: int) -> Department | None:
+    async def get_by_id(self, department_id: int) -> Department | None:
         raise NotImplemented
 
     @abstractmethod
     async def change_department(
         self,
-        departament_id: int,
+        department_id: int,
         name: str | None,
         parent_id: int | None,
     ) -> Department | None:
@@ -30,5 +30,5 @@ class AbstractDepartmentRepository(ABC):
         raise NotImplemented
 
     @abstractmethod
-    async def delete(self, departament_id: int):
+    async def delete(self, department_id: int):
         raise NotImplemented

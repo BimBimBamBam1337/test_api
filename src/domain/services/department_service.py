@@ -1,46 +1,46 @@
-from domain.exceptions import DepartamentNotFoundError, DepartamentAlreadyExistsError
-from domain.entities import Departament
+from domain.exceptions import DepartmentNotFoundError, DepartmentAlreadyExistsError
+from domain.entities import Department
 from domain.uow import AbstractUnitOfWork
 
 
-class DepartamentService:
+class DepartmentService:
     def __init__(self, uow: AbstractUnitOfWork):
-        self.__departament_repo = uow.departament_repo
+        self.__department_repo = uow.department_repo
 
-    async def create(self, entity: Departament) -> Departament:
-        exists = await self.__departament_repo.exists(entity.id)
+    async def create(self, entity: Department) -> Department:
+        exists = await self.__department_repo.exists(entity.id)
         if exists:
-            raise DepartamentAlreadyExistsError
-        departament = await self.__departament_repo.create(entity)
-        return departament
+            raise DepartmentAlreadyExistsError
+        department = await self.__department_repo.create(entity)
+        return department
 
-    async def get_by_id(self, departament_id: int) -> Departament:
-        departament = await self.__departament_repo.get_by_id(departament_id)
-        if departament_id is None:
-            raise DepartamentNotFoundError
-        return departament
+    async def get_by_id(self, department_id: int) -> Department:
+        department = await self.__department_repo.get_by_id(department_id)
+        if department is None:
+            raise DepartmentNotFoundError
+        return department
 
-    async def change_departament(
+    async def change_department(
         self,
-        departament_id: int,
+        department_id: int,
         name: str | None,
         parent_id: int | None,
-    ) -> Departament:
-        new_departament = await self.__departament_repo.change_departament(
-            departament_id=departament_id, name=name, parent_id=parent_id
+    ) -> Department:
+        new_department = await self.__department_repo.change_department(
+            department_id=department_id, name=name, parent_id=parent_id
         )
-        if new_departament is None:
-            raise DepartamentNotFoundError
-        return new_departament
+        if new_department is None:
+            raise DepartmentNotFoundError
+        return new_department
 
-    async def update(self, entity: Departament) -> Departament:
-        new_departament = await self.__departament_repo.update(entity)
-        if new_departament is None:
-            raise DepartamentNotFoundError
-        return new_departament
+    async def update(self, entity: Department) -> Department:
+        new_department = await self.__department_repo.update(entity)
+        if new_department is None:
+            raise DepartmentNotFoundError
+        return new_department
 
-    async def delete(self, departament_id: int):
-        exists = await self.__departament_repo.delete(departament_id)
+    async def delete(self, department_id: int):
+        exists = await self.__department_repo.delete(department_id)
         if exists is None:
-            raise DepartamentNotFoundError
-        await self.__departament_repo.delete(departament_id)
+            raise DepartmentNotFoundError
+        await self.__department_repo.delete(department_id)

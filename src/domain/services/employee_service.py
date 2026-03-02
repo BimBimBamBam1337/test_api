@@ -5,8 +5,8 @@ from domain.uow import AbstractUnitOfWork
 
 class EmployeeService:
     def __init__(self, uow: AbstractUnitOfWork):
-        self.__employe_repo = uow.employe_repo
-        self.__departament_repo = uow.departament_repo
+        self.__employe_repo = uow.employee_repo
+        self.__departament_repo = uow.department_repo
 
     async def create(self, entity: Employee) -> Employee:
         exists = await self.__departament_repo.exists(entity.department_id)

@@ -5,7 +5,7 @@ from domain.entities import Employee
 
 class AbstractEmployeeRepository(ABC):
     @abstractmethod
-    async def exists(self, employe_id: int) -> bool:
+    async def exists(self, employee_id: int) -> bool:
         raise NotImplemented
 
     @abstractmethod
@@ -13,7 +13,7 @@ class AbstractEmployeeRepository(ABC):
         raise NotImplemented
 
     @abstractmethod
-    async def get_by_id(self, employe_id: int) -> Employee | None:
+    async def get_by_id(self, employee_id: int) -> Employee | None:
         raise NotImplemented
 
     @abstractmethod
@@ -21,5 +21,5 @@ class AbstractEmployeeRepository(ABC):
         raise NotImplemented
 
     @abstractmethod
-    async def delete(self, employe_id: int):
+    async def delete(self, employee_id: int):
         raise NotImplemented

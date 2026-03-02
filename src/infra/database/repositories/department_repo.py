@@ -10,9 +10,9 @@ class DepartmentRepository(AbstractDepartmentRepository):
     def __init__(self, session: AsyncSession):
         self.session = session
 
-    async def exists(self, departament_id: int) -> bool:
+    async def exists(self, department_id: int) -> bool:
         result = await self.session.execute(
-            select(1).where(DepartmentORM.id == departament_id)
+            select(1).where(DepartmentORM.id == department_id)
         )
         return result.scalar_one_or_none() is not None
 
@@ -20,9 +20,9 @@ class DepartmentRepository(AbstractDepartmentRepository):
         self.session.add(DepartmentORM.from_entity(entity))
         return entity
 
-    async def get_by_id(self, departament_id: int) -> Department | None:
+    async def get_by_id(self, department_id: int) -> Department | None:
         result = await self.session.execute(
-            select(DepartmentORM).where(DepartmentORM.id == departament_id)
+            select(DepartmentORM).where(DepartmentORM.id == department_id)
         )
         model = result.scalar_one_or_none()
         return model.to_entity() if model else None
@@ -75,7 +75,7 @@ class DepartmentRepository(AbstractDepartmentRepository):
 
         return department_orm.to_entity()
 
-    async def delete(self, departament_id: int):
+    async def delete(self, department_id: int):
         await self.session.execute(
-            delete(DepartmentORM).where(DepartmentORM.id == departament_id)
+            delete(DepartmentORM).where(DepartmentORM.id == department_id)
         )
