@@ -9,7 +9,7 @@ class EmployeeService:
         self.__departament_repo = uow.department_repo
 
     async def create(self, entity: Employee) -> Employee:
-        exists = await self.__departament_repo.exists(entity.department_id)
+        exists = await self.__departament_repo.exists(entity.id)
         if exists:
             raise EmployeeAlreadyExistsError
         employe = await self.__employe_repo.create(entity)

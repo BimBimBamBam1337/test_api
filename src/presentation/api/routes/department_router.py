@@ -1,6 +1,7 @@
-from fastapi import APIRouter, Depends, Body, Path, Query, status
+from fastapi import APIRouter, Depends, Body, HTTPException, Path, Query, status
 from datetime import date
 
+from domain.exceptions import DepartmentNotFoundError, DepartmentAlreadyExistsError
 from presentation.api.dependencies import (
     get_department_handler,
     get_employee_handler,
@@ -30,10 +31,13 @@ async def create_department(
     data: CreateDepartmentRequest = Body(...),
     handler: DepartmentHandler = Depends(get_department_handler),
 ):
-    return await handler.create(
-        name=data.name,
-        parent_id=data.parent_id,
-    )
+    try:
+        return await handler.create(
+            name=data.name,
+            parent_id=data.parent_id,
+        )
+    except DepartmentAlreadyExistsError:
+        raise HTTPException(status_code=409, detail="Employee already exist")
 
 
 @router.post(
@@ -47,12 +51,15 @@ async def create_employee_in_department(
     data: CreateEmployeeRequest = Body(...),
     handler: EmployeeHandler = Depends(get_employee_handler),
 ):
-    return await handler.create(
-        department_id=department_id,
-        full_name=data.full_name,
-        position=data.position,
-        hired_at=data.hired_at,
-    )
+    try:
+        return await handler.create(
+            department_id=department_id,
+            full_name=data.full_name,
+            position=data.position,
+            hired_at=data.hired_at,
+        )
+    except DepartmentNotFoundError:
+        raise HTTPException(status_code=404, detail="Department not found")
 
 
 @router.get(
@@ -66,11 +73,14 @@ async def get_department_tree(
     include_employees: bool = Query(True),
     handler: DepartmentHandler = Depends(get_department_handler),
 ):
-    return await handler.get_tree(
-        department_id=department_id,
-        depth=depth,
-        include_employees=include_employees,
-    )
+    try:
+        return await handler.get_tree(
+            department_id=department_id,
+            depth=depth,
+            include_employees=include_employees,
+        )
+    except DepartmentNotFoundError:
+        raise HTTPException(status_code=404, detail="Department not found")
 
 
 @router.patch(
@@ -82,11 +92,14 @@ async def update_department(
     data: UpdateDepartmentRequest = Body(...),
     handler: DepartmentHandler = Depends(get_department_handler),
 ):
-    return await handler.change(
-        department_id=department_id,
-        name=data.name,
-        parent_id=data.parent_id,
-    )
+    try:
+        return await handler.change(
+            department_id=department_id,
+            name=data.name,
+            parent_id=data.parent_id,
+        )
+    except DepartmentNotFoundError:
+        raise HTTPException(status_code=404, detail="Department not found")
 
 
 @router.delete(
@@ -100,8 +113,11 @@ async def delete_department(
     reassign_to_department_id: int | None = Query(None),
     handler: DepartmentHandler = Depends(get_department_handler),
 ):
-    await handler.delete(
-        department_id=department_id,
-        mode=mode,
-        reassign_to_department_id=reassign_to_department_id,
-    )
+    try:
+        await handler.delete(
+            department_id=department_id,
+            mode=mode,
+            reassign_to_department_id=reassign_to_department_id,
+        )
+    except DepartmentNotFoundError:
+        raise HTTPException(status_code=404, detail="Department not found")

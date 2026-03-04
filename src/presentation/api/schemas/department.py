@@ -2,10 +2,11 @@ from datetime import datetime
 from pydantic import BaseModel, Field, field_validator
 
 from domain.entities import Department
+from .employee import EmployeeResponse
 
 
 class DepartmentResponse(BaseModel):
-    id: int = Field(description="Уникальный идентификатор подразделения")
+    id: int | None = Field(description="Уникальный идентификатор подразделения")
 
     name: str = Field(
         description="Название подразделения", min_length=1, max_length=200
@@ -16,7 +17,7 @@ class DepartmentResponse(BaseModel):
         description="Идентификатор родительского подразделения (null — если корневое)",
     )
 
-    created_at: datetime = Field(description="Дата создания подразделения")
+    created_at: datetime | None = Field(description="Дата создания подразделения")
 
     @classmethod
     def from_domain(cls, entity: Department) -> "DepartmentResponse":
@@ -76,5 +77,6 @@ class DepartmentTreeResponse(BaseModel):
     children: list["DepartmentTreeResponse"] = Field(
         default_factory=list, description="Список дочерних подразделений"
     )
-
-    model_config = {"from_attributes": True}
+    employees: list["EmployeeResponse"] = Field(
+        default_factory=list, description="Сотрудники подразделения"
+    )

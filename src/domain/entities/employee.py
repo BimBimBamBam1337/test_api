@@ -4,28 +4,26 @@ from datetime import datetime
 
 @dataclass
 class Employee:
-    id: int
+    id: int | None
     department_id: int
     full_name: str
     position: str
-    hired_at: datetime | None
-    created_at: datetime
+    hired_at: datetime | None = None
+    created_at: datetime | None = None
 
     @classmethod
     def create(
         cls,
-        id: int,
         department_id: int,
         full_name: str,
         position: str,
         hired_at: datetime | None,
-        created_at: datetime,
     ) -> "Employee":
         return cls(
-            id=id,
+            id=None,
             department_id=department_id,
             full_name=full_name,
             position=position,
             hired_at=hired_at,
-            created_at=created_at,
+            created_at=None,
         )

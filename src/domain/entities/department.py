@@ -4,18 +4,16 @@ from datetime import datetime
 
 @dataclass
 class Department:
-    id: int
+    id: int | None
     name: str
     parent_id: int | None
-    created_at: datetime
+    created_at: datetime | None = None
 
     @classmethod
-    def create(
-        cls, id: int, name: str, parent_id: int | None, created_at: datetime
-    ) -> "Department":
+    def create(cls, name: str, parent_id: int | None) -> "Department":
         return cls(
-            id=id,
+            id=None,
             name=name,
             parent_id=parent_id,
-            created_at=created_at,
+            created_at=None,
         )

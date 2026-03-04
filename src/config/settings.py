@@ -7,4 +7,4 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
 
-settinsg = Settings()  # type: ignore
+settings = Settings()  # type: ignore

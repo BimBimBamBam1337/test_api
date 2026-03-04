@@ -6,33 +6,48 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 
 from domain.entities import Department
-
-from .employee_orm import EmployeeORM
 from .base import Base
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .employee_orm import EmployeeORM
 
 
 class DepartmentORM(Base):
     __tablename__ = "departments"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+
     name: Mapped[str] = mapped_column(String(200), nullable=False)
+
     parent_id: Mapped[Optional[int]] = mapped_column(
-        ForeignKey("departments.id", ondelete="SET NULL"), nullable=True
+        ForeignKey("departments.id", ondelete="SET NULL"),
+        nullable=True,
     )
+
     created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), nullable=False
+        DateTime(timezone=True),
+        server_default=func.now(),
+        nullable=False,
     )
+
     # родитель
     parent: Mapped[Optional["DepartmentORM"]] = relationship(
-        "DepartmentORM", remote_side=[id], back_populates="children"
+        "DepartmentORM",
+        remote_side="DepartmentORM.id",
+        back_populates="children",
     )
+
     # дочерние подразделения
     children: Mapped[List["DepartmentORM"]] = relationship(
-        "DepartmentORM", back_populates="parent", cascade="all, delete-orphan"
+        "DepartmentORM",
+        back_populates="parent",
     )
+
     # сотрудники
     employees: Mapped[List["EmployeeORM"]] = relationship(
-        "Employee", back_populates="department", cascade="all, delete-orphan"
+        "EmployeeORM",
+        back_populates="department",
     )
 
     def __repr__(self) -> str:

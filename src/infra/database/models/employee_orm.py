@@ -6,14 +6,17 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 
 from domain.entities import Employee
-from .department_orm import DepartmentORM
 from .base import Base
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .department_orm import DepartmentORM
 
 
 class EmployeeORM(Base):
     __tablename__ = "employees"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     department_id: Mapped[int] = mapped_column(
         ForeignKey("departments.id", ondelete="CASCADE"), nullable=False
     )

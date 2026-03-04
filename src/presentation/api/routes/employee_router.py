@@ -21,7 +21,6 @@ async def create_employee_handler(
     handler: EmployeeHandler = Depends(get_employee_handler),
 ):
     return await handler.create(
-        employee_id=data.id,
         department_id=data.department_id,
         full_name=data.full_name,
         position=data.position,
