@@ -20,6 +20,7 @@ class EmployeeRepository(AbstractEmployeeRepository):
         employee_orm = EmployeeORM.from_entity(entity)  # создаём ORM объект
         self.session.add(employee_orm)
         await self.session.flush()
+        await self.session.refresh(employee_orm)
         return employee_orm.to_entity()
 
     async def get_by_id(self, employee_id: int) -> Employee | None:
@@ -27,7 +28,6 @@ class EmployeeRepository(AbstractEmployeeRepository):
             select(EmployeeORM).where(EmployeeORM.id == employee_id)
         )
         model = result.scalar_one_or_none()
-        await self.session.flush()
         return model.to_entity() if model else None
 
     async def update(self, entity: Employee) -> Employee | None:
@@ -43,11 +43,9 @@ class EmployeeRepository(AbstractEmployeeRepository):
             .returning(EmployeeORM)
         )
         model = result.scalar_one_or_none()
-        await self.session.flush()
         return model.to_entity() if model else None
 
     async def delete(self, employee_id: int):
         await self.session.execute(
             delete(EmployeeORM).where(EmployeeORM.id == employee_id)
         )
-        await self.session.flush()

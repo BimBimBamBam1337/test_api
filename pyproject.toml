@@ -8,6 +8,7 @@ dependencies = [
     "alembic>=1.18.4",
     "asyncpg>=0.31.0",
     "fastapi>=0.133.1",
+    "greenlet>=3.3.2",
     "loguru>=0.7.3",
     "pydantic>=2.12.5",
     "pydantic-settings>=2.13.1",
@@ -19,4 +20,10 @@ dependencies = [
 script_location = "%(here)s/src/infra/database/migrations"
 prepend_sys_path = [
     "."
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.2",
+    "pytest-asyncio>=1.3.0",
 ]

@@ -18,6 +18,7 @@ class DepartmentRepository(AbstractDepartmentRepository):
         department_orm = DepartmentORM.from_entity(entity)
         self.session.add(department_orm)
         await self.session.flush()
+        await self.session.refresh(department_orm)
         return department_orm.to_entity()
 
     async def get_by_id(self, department_id: int) -> Department | None:
@@ -25,7 +26,6 @@ class DepartmentRepository(AbstractDepartmentRepository):
             select(DepartmentORM).where(DepartmentORM.id == department_id)
         )
         model = result.scalar_one_or_none()
-        await self.session.flush()
         return model.to_entity() if model else None
 
     async def change_department(
@@ -73,25 +73,18 @@ class DepartmentRepository(AbstractDepartmentRepository):
 
         if department_orm is None:
             return None
-        await self.session.flush()
         return department_orm.to_entity()
 
-    async def _collect_children_ids(
-        self,
-        session: AsyncSession,
-        department_id: int,
-    ) -> list[int]:
-
+    async def _collect_children_ids(self, department_id: int) -> list[int]:
         result = await self.session.execute(
             select(DepartmentORM.id).where(DepartmentORM.parent_id == department_id)
         )
-
         children_ids = [row[0] for row in result.all()]
         all_ids = []
 
         for child_id in children_ids:
             all_ids.append(child_id)
-            nested = await self._collect_children_ids(self.session, child_id)
+            nested = await self._collect_children_ids(child_id)
             all_ids.extend(nested)
 
         return all_ids
@@ -104,7 +97,6 @@ class DepartmentRepository(AbstractDepartmentRepository):
     ) -> None:
 
         children_ids = await self._collect_children_ids(
-            self.session,
             department_id,
         )
 
@@ -134,7 +126,6 @@ class DepartmentRepository(AbstractDepartmentRepository):
             await self.session.execute(
                 delete(DepartmentORM).where(DepartmentORM.id.in_(all_ids))
             )
-            await self.session.flush()
         else:
             raise ValueError("Invalid delete mode")
 
