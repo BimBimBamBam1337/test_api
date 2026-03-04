@@ -21,7 +21,10 @@
 make up
 
 # Применение миграций базы данных
-make migrate-up
+make migrateup
+
+# Запуск тестов
+make tests
 
 # Проект доступен по адресу: http://localhost:8000
 ```
