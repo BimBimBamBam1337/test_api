@@ -1,6 +1,6 @@
 include .env
 
-
+.PHONY: tests
 
 migrate:
 	docker-compose run -it --rm api uv run alembic revision --autogenerate && make migrateup
@@ -25,6 +25,9 @@ start:
 
 restart:
 	docker-compose restart api && make logs
+
+tests:
+	docker compose exec -it api uv run pytest -v
 
 db:
 	docker compose exec -it postgres psql -h localhost -U ${DB_USER} -d ${DB_NAME}
